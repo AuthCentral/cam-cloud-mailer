@@ -22,7 +22,7 @@ public class VerificationService {
     public String verifyAndRedirectToCAMManager(VerificationRequest verificationRequest) throws MailerServiceException {
         try {
             MailingHistory history = mailingDAOService.getMailingHistory(verificationRequest.getCorrelationId());
-            if (history.getTransactionCode().equals(verificationRequest.getTransactionCode()) || history.getVerificationCode().equals(verificationRequest.getVerificationCode())) {
+            if (history.getTransactionCode().equals(verificationRequest.getTransactionCode()) && history.getVerificationCode().equals(verificationRequest.getVerificationCode())) {
                 return createRedirectToken();
             }
         } catch (ResourceNotFoundException e) {

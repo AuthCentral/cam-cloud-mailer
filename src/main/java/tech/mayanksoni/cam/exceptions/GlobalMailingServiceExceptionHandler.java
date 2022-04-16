@@ -34,6 +34,14 @@ public class GlobalMailingServiceExceptionHandler extends ResponseEntityExceptio
                 .build());
     }
 
+    @ExceptionHandler(MailerServiceException.class)
+    public ResponseEntity<ExceptionResponse> handleServiceException(MailerServiceException e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ExceptionResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .message(e.getMessage())
+                .build());
+    }
+
     private String buildSanityExceptionMessage(String emailId) {
         if (!StringUtils.isBlank(emailId)) {
             return MessageFormat.format(SANITY_RESPONSE_ERROR, emailId);
