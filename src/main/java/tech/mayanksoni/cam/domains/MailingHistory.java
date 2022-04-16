@@ -23,6 +23,7 @@ public class MailingHistory {
     private int apiResponseCode;
     private String transactionCode;
     private String requestContext;
+    private String verificationCode;
 
 
 }
