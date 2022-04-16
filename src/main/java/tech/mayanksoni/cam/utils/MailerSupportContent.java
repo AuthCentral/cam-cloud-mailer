@@ -18,5 +18,8 @@ public class MailerSupportContent {
     private String transactionCode;
     private String emailAddress;
     private int responseCode;
-
+    private String emailVerificationLink;
+    private String verificationCode;
+    private String emailIdentifier;
+    private String apiResponseBody;
 }

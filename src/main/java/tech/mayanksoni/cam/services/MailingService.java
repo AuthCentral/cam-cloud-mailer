@@ -4,6 +4,7 @@ import io.micrometer.core.instrument.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tech.mayanksoni.cam.configuration.MailerConfiguration;
 import tech.mayanksoni.cam.constants.MailerServiceExceptionConstants;
 import tech.mayanksoni.cam.exceptions.EmailSanityException;
 import tech.mayanksoni.cam.exceptions.RequestInvalid;
@@ -12,8 +13,16 @@ import tech.mayanksoni.cam.requests.MailingRequest;
 import tech.mayanksoni.cam.response.MailingServiceResponse;
 import tech.mayanksoni.cam.utils.GeneratorUtils;
 import tech.mayanksoni.cam.utils.MailerSupportContent;
+import tech.mayanksoni.cam.utils.URLUtils;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.text.MessageFormat;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+
+import static tech.mayanksoni.cam.constants.MailerServiceConstants.*;
 
 @Service
 @Slf4j
@@ -26,6 +35,10 @@ public class MailingService {
     private SendgridAPIHelperService sendgridAPIHelperService;
     @Autowired
     private MailerSupportContent mailerSupportContent;
+    @Autowired
+    private MailerConfiguration mailerConfiguration;
+    @Autowired
+    private MailingDAOService mailingDAOService;
 
 
     public MailingServiceResponse sendEmail(MailingRequest request) throws EmailSanityException, RequestInvalid, SendgridAPIRequestFailed {
@@ -33,10 +46,15 @@ public class MailingService {
         validateIncomingRequest(request);
         sanityService.processSanityRules(request.getDestinationEmailAddress());
         mailerSupportContent.setTransactionCode(GeneratorUtils.buildRandomAlphanumericSequence(200));
+        mailerSupportContent.setTransactionCode(GeneratorUtils.buildRandomAlphanumericSequence(TRANSACTION_CODE_LEN));
+        mailerSupportContent.setVerificationCode(GeneratorUtils.buildRandomAlphanumericSequence(VERIFICATION_CODE_LEN));
+        mailerSupportContent.setEmailVerificationLink(buildVerificationLink());
+        mailerSupportContent.setEmailIdentifier(GeneratorUtils.buildRandomAlphanumericSequence(EMAIL_MONGO_ID_LEN));
         templatingEngine.processEmailContent(request);
         sendgridAPIHelperService.sendEmail(request);
+        mailingDAOService.saveMailingRequestAndResponse();
         return MailingServiceResponse.builder()
-                .emailIdentifier(GeneratorUtils.buildRandomAlphanumericSequence(50))
+                .emailIdentifier(mailerSupportContent.getEmailIdentifier())
                 .apiResponseCode(mailerSupportContent.getResponseCode())
                 .build();
     }
@@ -49,5 +67,14 @@ public class MailingService {
         } else if (request.getMailType() == null) {
             throw new RequestInvalid(MailerServiceExceptionConstants.MAIL_TYPE_NOT_PRESENT.responseMessage);
         }
+    }
+
+    private String buildVerificationLink() {
+        String verificationEndpoint  = "/mailer/verify/email";
+        Map<String,String> requestParams = new HashMap<>();
+        requestParams.put("emailId", mailerSupportContent.getEmailAddress());
+        requestParams.put("transactionCode",mailerSupportContent.getTransactionCode());
+        requestParams.put("verificationCode", mailerSupportContent.getVerificationCode());
+        return URLUtils.encodeParams(requestParams, mailerConfiguration.getCamApiURL() + verificationEndpoint);
     }
 }

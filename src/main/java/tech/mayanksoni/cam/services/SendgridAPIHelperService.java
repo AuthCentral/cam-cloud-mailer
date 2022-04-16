@@ -42,6 +42,7 @@ public class SendgridAPIHelperService {
             apiRequest.setBody(mail.build());
             Response apiResponse = sendGridAPI.api(apiRequest);
             mailerSupportContent.setResponseCode(apiResponse.getStatusCode());
+            mailerSupportContent.setApiResponseBody(apiResponse.getBody());
             if (!(apiResponse.getStatusCode() == 200 || apiResponse.getStatusCode() == 201 || apiResponse.getStatusCode() == 202)) {
                 log.error(apiResponse.getBody());
                 throw new SendgridAPIRequestFailed(MessageFormat.format(MailerServiceExceptionConstants.SENDGRID_API_FAILED.responseMessage,apiResponse.getStatusCode()));

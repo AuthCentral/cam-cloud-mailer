@@ -16,7 +16,7 @@ import tech.mayanksoni.cam.services.MailingService;
 import tech.mayanksoni.cam.utils.MailerSupportContent;
 
 @RestController
-@RequestMapping("/mailer")
+@RequestMapping("/mail")
 public class MailingServiceController {
     @Autowired
     private MailingService mailingService;
