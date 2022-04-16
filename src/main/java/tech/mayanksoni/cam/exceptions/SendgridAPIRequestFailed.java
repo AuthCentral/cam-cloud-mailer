@@ -1,6 +1,6 @@
 package tech.mayanksoni.cam.exceptions;
 
-public class SendgridAPIRequestFailed extends Exception{
+public class SendgridAPIRequestFailed extends Exception {
     public SendgridAPIRequestFailed() {
     }
 

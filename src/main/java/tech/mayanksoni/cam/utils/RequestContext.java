@@ -22,7 +22,8 @@ public class RequestContext {
     private String requestUrl;
     private String method;
     private HttpSession httpSession;
-    public VerificationRequest toVerificationRequest(){
+
+    public VerificationRequest toVerificationRequest() {
         return VerificationRequest.builder()
 
                 .build();

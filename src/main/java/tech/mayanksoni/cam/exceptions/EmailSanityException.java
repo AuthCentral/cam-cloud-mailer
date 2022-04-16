@@ -3,14 +3,6 @@ package tech.mayanksoni.cam.exceptions;
 public class EmailSanityException extends Exception {
     private String emailDomain;
 
-    public String getEmailDomain() {
-        return emailDomain;
-    }
-
-    public void setEmailDomain(String emailDomain) {
-        this.emailDomain = emailDomain;
-    }
-
     public EmailSanityException() {
     }
 
@@ -28,5 +20,13 @@ public class EmailSanityException extends Exception {
 
     public EmailSanityException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
+    }
+
+    public String getEmailDomain() {
+        return emailDomain;
+    }
+
+    public void setEmailDomain(String emailDomain) {
+        this.emailDomain = emailDomain;
     }
 }

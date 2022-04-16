@@ -20,10 +20,10 @@ public class TemplatingEngine {
     public void processEmailContent(MailingRequest request) {
         Context mailContext = new Context();
         mailContext.setVariable("request", request);
-        mailContext.setVariable("supporter",mailerSupportContent);
+        mailContext.setVariable("supporter", mailerSupportContent);
         switch (request.getMailType()) {
             case EMAIL_VERIFICATION:
-                mailerSupportContent.setProcessedTemplate(templateEngine.process("emailVerification.html",mailContext));
+                mailerSupportContent.setProcessedTemplate(templateEngine.process("emailVerification.html", mailContext));
                 break;
         }
     }

@@ -66,10 +66,10 @@ public class MailingService {
     }
 
     private String buildVerificationLink() {
-        String verificationEndpoint  = "/mailer/verify/email";
-        Map<String,String> requestParams = new HashMap<>();
+        String verificationEndpoint = "/mailer/verify/email";
+        Map<String, String> requestParams = new HashMap<>();
         requestParams.put("emailId", mailerSupportContent.getEmailAddress());
-        requestParams.put("transactionCode",mailerSupportContent.getTransactionCode());
+        requestParams.put("transactionCode", mailerSupportContent.getTransactionCode());
         requestParams.put("verificationCode", mailerSupportContent.getVerificationCode());
         requestParams.put("emailIdentifier", mailerSupportContent.getEmailIdentifier());
         return URLUtils.encodeParams(requestParams, mailerConfiguration.getCamApiURL() + verificationEndpoint);

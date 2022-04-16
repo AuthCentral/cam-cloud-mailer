@@ -26,10 +26,12 @@ public class GeneratorUtils {
         return builder.toString();
 
     }
-    public static String buildRandomNumberSequence(int length){
+
+    public static String buildRandomNumberSequence(int length) {
         return buildRandomString(NUMERIC, length);
     }
-    public static String buildRandomAlphanumericSequence(int length){
+
+    public static String buildRandomAlphanumericSequence(int length) {
         return buildRandomString(ALPHANUMERIC, length);
     }
 

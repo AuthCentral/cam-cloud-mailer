@@ -16,5 +16,4 @@ public class VerificationRequest {
     private String correlationId;
 
 
-
 }

@@ -1,6 +1,6 @@
 package tech.mayanksoni.cam.exceptions;
 
-public class MailerServiceException extends Exception{
+public class MailerServiceException extends Exception {
     public MailerServiceException() {
     }
 

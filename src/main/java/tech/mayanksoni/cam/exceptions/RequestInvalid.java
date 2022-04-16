@@ -1,6 +1,6 @@
 package tech.mayanksoni.cam.exceptions;
 
-public class RequestInvalid extends Exception{
+public class RequestInvalid extends Exception {
     public RequestInvalid() {
     }
 

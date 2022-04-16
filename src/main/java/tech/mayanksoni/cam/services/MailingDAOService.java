@@ -19,7 +19,7 @@ public class MailingDAOService {
     @Autowired
     private MailingHistoryRepository mailingHistoryRepository;
 
-    protected void saveMailingRequestAndResponse(){
+    protected void saveMailingRequestAndResponse() {
         MailingHistory mailingHistory = MailingHistory.builder()
                 .apiResponseCode(mailerSupportContent.getResponseCode())
                 .apiResponseMessage(mailerSupportContent.getApiResponseBody())
@@ -32,7 +32,8 @@ public class MailingDAOService {
                 .build();
         mailingHistoryRepository.save(mailingHistory);
     }
-    protected MailingHistory getMailingHistory(String emailIdentifier){
+
+    protected MailingHistory getMailingHistory(String emailIdentifier) {
         return mailingHistoryRepository.findById(emailIdentifier).orElseThrow(() -> new ResourceNotFoundException(MailerServiceExceptionConstants.EMAIL_IDENTIFIER_IS_NOT_VALID.responseMessage));
     }
 }
