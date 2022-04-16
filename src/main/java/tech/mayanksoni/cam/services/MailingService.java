@@ -42,11 +42,10 @@ public class MailingService {
         LocalDateTime dateTime = LocalDateTime.now();
         validateIncomingRequest(request);
         sanityService.processSanityRules(request.getDestinationEmailAddress());
-        mailerSupportContent.setTransactionCode(GeneratorUtils.buildRandomAlphanumericSequence(200));
         mailerSupportContent.setTransactionCode(GeneratorUtils.buildRandomAlphanumericSequence(TRANSACTION_CODE_LEN));
         mailerSupportContent.setVerificationCode(GeneratorUtils.buildRandomAlphanumericSequence(VERIFICATION_CODE_LEN));
-        mailerSupportContent.setEmailVerificationLink(buildVerificationLink());
         mailerSupportContent.setEmailIdentifier(GeneratorUtils.buildRandomAlphanumericSequence(EMAIL_MONGO_ID_LEN));
+        mailerSupportContent.setEmailVerificationLink(buildVerificationLink());
         templatingEngine.processEmailContent(request);
         sendgridAPIHelperService.sendEmail(request);
         mailingDAOService.saveMailingRequestAndResponse();
@@ -72,6 +71,7 @@ public class MailingService {
         requestParams.put("emailId", mailerSupportContent.getEmailAddress());
         requestParams.put("transactionCode",mailerSupportContent.getTransactionCode());
         requestParams.put("verificationCode", mailerSupportContent.getVerificationCode());
+        requestParams.put("emailIdentifier", mailerSupportContent.getEmailIdentifier());
         return URLUtils.encodeParams(requestParams, mailerConfiguration.getCamApiURL() + verificationEndpoint);
     }
 }
