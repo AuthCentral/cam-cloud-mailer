@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import tech.mayanksoni.cam.constants.MailType;
 
-import java.util.UUID;
-
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

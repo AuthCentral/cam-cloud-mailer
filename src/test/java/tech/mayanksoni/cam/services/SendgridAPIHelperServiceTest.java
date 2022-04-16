@@ -2,7 +2,6 @@ package tech.mayanksoni.cam.services;
 
 import com.sendgrid.Response;
 import com.sendgrid.SendGridAPI;
-import com.sendgrid.helpers.mail.Mail;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,10 +12,8 @@ import tech.mayanksoni.cam.requests.MailingRequest;
 import tech.mayanksoni.cam.utils.GeneratorUtils;
 import tech.mayanksoni.cam.utils.MailerSupportContent;
 
-import java.io.IOException;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 

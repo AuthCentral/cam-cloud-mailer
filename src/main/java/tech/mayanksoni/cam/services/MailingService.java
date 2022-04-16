@@ -15,9 +15,6 @@ import tech.mayanksoni.cam.utils.GeneratorUtils;
 import tech.mayanksoni.cam.utils.MailerSupportContent;
 import tech.mayanksoni.cam.utils.URLUtils;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;

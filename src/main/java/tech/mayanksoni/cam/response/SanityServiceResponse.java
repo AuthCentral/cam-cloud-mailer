@@ -1,6 +1,5 @@
 package tech.mayanksoni.cam.response;
 
-import jdk.jfr.BooleanFlag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

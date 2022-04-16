@@ -7,7 +7,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tech.mayanksoni.cam.constants.MailType;
 import tech.mayanksoni.cam.exceptions.EmailSanityException;
@@ -16,10 +15,6 @@ import tech.mayanksoni.cam.exceptions.SendgridAPIRequestFailed;
 import tech.mayanksoni.cam.requests.MailingRequest;
 import tech.mayanksoni.cam.utils.GeneratorUtils;
 import tech.mayanksoni.cam.utils.MailerSupportContent;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class MailingServiceTest {
