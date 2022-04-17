@@ -1,0 +1,47 @@
+stages:
+  - buildx
+  - build-spring
+  - docker
+
+buildx:
+  image: docker:git
+  stage: buildx
+  variables:
+    GIT_STRATEGY: none
+  artifacts:
+    paths:
+      - buildx
+    expire_in: 1 hour
+  services:
+    - docker:dind
+  script:
+    - export DOCKER_BUILDKIT=1
+    - git clone https://github.com/docker/buildx ./docker-buildx
+    - docker build --platform=local -o . ./docker-buildx
+  only:
+    - main
+build-spring:
+  image: maven
+  stage: build-spring
+  script:
+    - mvn clean install -Dmaven.test.skip=true
+  artifacts:
+    paths:
+      - target/*.jar
+    expire_in: 1 hour
+containerize:
+  image: docker
+  services:
+    - name: docker:dind
+      command: ["--experimental"]
+  stage: docker
+  before_script:
+    - mkdir -p ~/.docker/cli-plugins
+    - mv buildx ~/.docker/cli-plugins/docker-buildx
+    - docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+    - docker login -u mayank1470 -p ${DOCKER_SECRET}
+  script:
+    - docker buildx create --use
+    - docker buildx build --platform linux/amd64,linux/aarch64 --push -t mayank1470/authcentral-mailer:latest .
+  only:
+    - main
