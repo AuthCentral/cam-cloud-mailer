@@ -36,4 +36,10 @@ public class MailingDAOService {
     protected MailingHistory getMailingHistory(String emailIdentifier) {
         return mailingHistoryRepository.findById(emailIdentifier).orElseThrow(() -> new ResourceNotFoundException(MailerServiceExceptionConstants.EMAIL_IDENTIFIER_IS_NOT_VALID.responseMessage));
     }
+    protected void deleteUsedTokens(String emailIdentifier){
+        mailingHistoryRepository.delete(mailingHistoryRepository.findById(emailIdentifier).get());
+    }
+    protected void deleteUsedTokens(MailingHistory mailingHistory){
+        mailingHistoryRepository.delete(mailingHistory);
+    }
 }

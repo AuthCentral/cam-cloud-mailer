@@ -23,6 +23,7 @@ public class VerificationService {
         try {
             MailingHistory history = mailingDAOService.getMailingHistory(verificationRequest.getCorrelationId());
             if (history.getTransactionCode().equals(verificationRequest.getTransactionCode()) && history.getVerificationCode().equals(verificationRequest.getVerificationCode())) {
+                mailingDAOService.deleteUsedTokens(history);
                 return createRedirectToken();
             }
         } catch (ResourceNotFoundException e) {
