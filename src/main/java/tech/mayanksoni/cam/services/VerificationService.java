@@ -3,6 +3,7 @@ package tech.mayanksoni.cam.services;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tech.mayanksoni.cam.configuration.MailerConfiguration;
 import tech.mayanksoni.cam.domains.MailingHistory;
 import tech.mayanksoni.cam.exceptions.MailerServiceException;
 import tech.mayanksoni.cam.exceptions.ResourceNotFoundException;
@@ -18,6 +19,9 @@ import java.util.Map;
 public class VerificationService {
     @Autowired
     private MailingDAOService mailingDAOService;
+    @Autowired
+    private MailerConfiguration mailerConfiguration;
+
 
     public String verifyAndRedirectToCAMManager(VerificationRequest verificationRequest) throws MailerServiceException {
         try {
@@ -34,7 +38,7 @@ public class VerificationService {
     }
 
     private String createRedirectToken() {
-        String camAppUrl = "https://cam-manage.mayanksoni.tech/verify/email";
+        String camAppUrl = mailerConfiguration.getCamManagerBaseUrl() + "/verify/email";
         Map<String, String> requestMap = new HashMap<>();
         requestMap.put("token", GeneratorUtils.buildRandomAlphanumericSequence(200));
         return URLUtils.encodeParams(requestMap, camAppUrl);

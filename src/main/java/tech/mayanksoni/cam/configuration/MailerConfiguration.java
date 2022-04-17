@@ -9,6 +9,12 @@ import org.springframework.context.annotation.Configuration;
 public class MailerConfiguration {
     @Value("${cam.api.url}")
     private String camApiURL;
+    @Value("${cam.manage.endpointLink}")
+    private String camManagerBaseUrl;
+
+    public String getCamManagerBaseUrl() {
+        return camManagerBaseUrl;
+    }
 
     public String getCamApiURL() {
         return camApiURL;
