@@ -9,6 +9,7 @@ import tech.mayanksoni.cam.exceptions.ResourceNotFoundException;
 import tech.mayanksoni.cam.repository.MailingHistoryRepository;
 import tech.mayanksoni.cam.utils.MailerSupportContent;
 
+import java.time.Duration;
 import java.time.Instant;
 
 @Service
@@ -26,9 +27,11 @@ public class MailingDAOService {
                 .verificationCode(mailerSupportContent.getVerificationCode())
                 .id(mailerSupportContent.getEmailIdentifier())
                 .transactionCode(mailerSupportContent.getTransactionCode())
+                .verificationLink(mailerSupportContent.getEmailVerificationLink())
                 .requestPlacedInstant(Instant.now())
                 .requestContext(mailerSupportContent.toString())
                 .sentEmailAddress(mailerSupportContent.getEmailAddress())
+                .transactionDuration(Duration.between(mailerSupportContent.getTransactionStartInstant(),Instant.now()))
                 .build();
         mailingHistoryRepository.save(mailingHistory);
     }

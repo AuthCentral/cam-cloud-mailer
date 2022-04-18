@@ -15,6 +15,8 @@ import tech.mayanksoni.cam.response.MailingServiceResponse;
 import tech.mayanksoni.cam.services.MailingService;
 import tech.mayanksoni.cam.utils.MailerSupportContent;
 
+import java.time.Instant;
+
 @RestController
 @RequestMapping("/mail")
 public class MailingServiceController {
@@ -26,6 +28,7 @@ public class MailingServiceController {
 
     @PostMapping("/send")
     public ResponseEntity<MailingServiceResponse> handleRequestToSendEmail(@RequestBody MailingRequest request) throws EmailSanityException, RequestInvalid, SendgridAPIRequestFailed {
+        mailerSupportContent.setTransactionStartInstant(Instant.now());
         mailerSupportContent.setEmailAddress(request.getDestinationEmailAddress());
         mailerSupportContent.setTransactionCode(request.getTransactionCode());
         return ResponseEntity.status(HttpStatus.OK).body(mailingService.sendEmail(request));

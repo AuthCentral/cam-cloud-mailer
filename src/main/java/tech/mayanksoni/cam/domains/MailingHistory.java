@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.Duration;
 import java.time.Instant;
 
 @Document("mailing-history-collection")
@@ -23,7 +24,9 @@ public class MailingHistory {
     private int apiResponseCode;
     private String transactionCode;
     private String requestContext;
+    private String verificationLink;
     private String verificationCode;
+    private Duration transactionDuration;
 
 
 }

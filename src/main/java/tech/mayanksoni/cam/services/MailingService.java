@@ -15,6 +15,7 @@ import tech.mayanksoni.cam.utils.GeneratorUtils;
 import tech.mayanksoni.cam.utils.MailerSupportContent;
 import tech.mayanksoni.cam.utils.URLUtils;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +40,7 @@ public class MailingService {
 
 
     public MailingServiceResponse sendEmail(MailingRequest request) throws EmailSanityException, RequestInvalid, SendgridAPIRequestFailed {
-        LocalDateTime dateTime = LocalDateTime.now();
+        Instant processingStartInstant = Instant.now();
         validateIncomingRequest(request);
         sanityService.processSanityRules(request.getDestinationEmailAddress());
         mailerSupportContent.setTransactionCode(GeneratorUtils.buildRandomAlphanumericSequence(TRANSACTION_CODE_LEN));
